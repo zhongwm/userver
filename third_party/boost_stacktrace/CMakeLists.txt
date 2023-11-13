@@ -31,9 +31,10 @@ elseif (MACOS)
 else()
     CHECK_INCLUDE_FILE(backtrace.h HAS_BACKTRACE_LIBRARY)
     if (NOT HAS_BACKTRACE_LIBRARY)
+        execute_process(COMMAND cc -dumpmachine OUTPUT_VARIABLE GCC_TRIPLET)
         # Attempt to find file in GCC specific path
         file(GLOB BacktraceIncludeFiles
-	     "/usr/lib/gcc/x86_64-linux-gnu/*/include/backtrace.h"
+	     "/usr/lib/gcc/${GCC_TRIPLET}/*/include/backtrace.h"
         )
         list(SORT BacktraceIncludeFiles)
         list(GET BacktraceIncludeFiles 0 BacktraceIncludeFile)
